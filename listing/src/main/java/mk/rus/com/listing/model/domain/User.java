@@ -1,14 +1,18 @@
 package mk.rus.com.listing.model.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
+import mk.rus.com.listing.model.enums.Role;
+
+import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "app_users")
 public class User {
+
     @Id
     private String username;
 
@@ -19,4 +23,12 @@ public class User {
     private String surname;
 
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Listing> listings;
+
+
 }

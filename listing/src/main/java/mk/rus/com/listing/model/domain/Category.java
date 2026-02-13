@@ -1,21 +1,29 @@
 package mk.rus.com.listing.model.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+import java.util.List;
+
 @Entity
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Category parent;
 
+    @OneToMany(mappedBy = "parent")
+    private List<Category> subcategories;
+
+    @OneToMany(mappedBy = "category")
+    private List<Listing> listings;
 }

@@ -1,23 +1,36 @@
 package mk.rus.com.listing.model.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.List;
+import java.math.BigDecimal;
 
-@Data
 @Entity
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Listing {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+
+    private String title;
+
+    @Column(length = 2000)
     private String description;
-    @OneToOne(cascade = CascadeType.ALL)
+
+    private BigDecimal price;
+
+    @ManyToOne
+    @JoinColumn(name = "location_id")
     private Location location;
-    private Double price;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_username")
+    private User owner;
 }
